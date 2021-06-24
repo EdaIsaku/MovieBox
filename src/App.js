@@ -29,6 +29,9 @@ function App() {
   useEffect(() => {
     let url = `http://www.omdbapi.com/?s=${searchStr}&apikey=${apiKey}&page=`;
     fetchMovies(page, url);
+    let data = JSON.parse(localStorage.getItem("data"));
+    setMovies(data);
+    setFilteredMovies(data);
     // eslint-disable-next-line
   }, [page, searchStr]);
 
@@ -43,8 +46,11 @@ function App() {
           });
           setTimeout(() => {
             let results = movies.concat(filterMovies);
-            setMovies(results);
-            setFilteredMovies(results);
+            localStorage.setItem("data", JSON.stringify(results));
+            // let data = JSON.parse(localStorage.getItem("data"));
+            // console.log(data);
+            // setMovies(data);
+            // setFilteredMovies(data);
             setLoading(false);
           }, 1000);
         } else {
